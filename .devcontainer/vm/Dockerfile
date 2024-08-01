@@ -8,13 +8,25 @@ RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "source /usr/local/shar
 
 RUN pip3 --disable-pip-version-check --no-cache-dir install -U \
   'poetry==1.1.13' \
-  'pip==22.1.2' \
+  'pip==22.1.2'
+
+USER vscode
+COPY pyproject.toml /opt/base/pyproject.toml
+COPY poetry.toml /opt/base/poetry.toml
+RUN sudo chown -R vscode:vscode /opt
+
+ENV PIP_TARGET=/opt/pip
+ENV PYTHONPATH=/opt/pip
+ENV PATH="${PIP_TARGET}/bin:${PATH}"
+WORKDIR /opt/base
+RUN poetry add --no-interaction \
   'ipykernel' \
   'jupyter' \
   'nbstripout' \
   'pre-commit' \
-  'black'
-USER vscode
+  'black' \
+  && rm -rf ~/.cache/pypoetry/{cache,artifacts}
+
 # prevent homebrew from updating or upgrading to save time
 ENV HOMEBREW_NO_AUTO_UPDATE=1
 ENV HOMEBREW_NO_INSTALL_UPGRADE=1
