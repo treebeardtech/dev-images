@@ -6,7 +6,6 @@ ARG INSTALL_NODE="true"
 ARG NODE_VERSION="lts/*"
 RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "source /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
-USER vscode
 RUN pip3 --disable-pip-version-check --no-cache-dir install -U \
   'poetry==1.1.13' \
   'pip==22.1.2' \
@@ -15,6 +14,7 @@ RUN pip3 --disable-pip-version-check --no-cache-dir install -U \
   'nbstripout' \
   'pre-commit' \
   'black'
+USER vscode
 # prevent homebrew from updating or upgrading to save time
 ENV HOMEBREW_NO_AUTO_UPDATE=1
 ENV HOMEBREW_NO_INSTALL_UPGRADE=1
