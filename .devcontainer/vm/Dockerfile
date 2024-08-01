@@ -9,7 +9,12 @@ RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "source /usr/local/shar
 USER vscode
 RUN pip3 --disable-pip-version-check --no-cache-dir install -U \
   'poetry==1.1.13' \
-  'pip==22.1.2'
+  'pip==22.1.2' \
+  'ipykernel' \
+  'jupyter' \
+  'nbstripout' \
+  'pre-commit' \
+  'black'
 # prevent homebrew from updating or upgrading to save time
 ENV HOMEBREW_NO_AUTO_UPDATE=1
 ENV HOMEBREW_NO_INSTALL_UPGRADE=1
