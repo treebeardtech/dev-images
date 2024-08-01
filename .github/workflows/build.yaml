@@ -2,6 +2,13 @@
 name: Build
 on:
   workflow_dispatch: {}
+  push:
+    branches:
+      - main
+      - seed
+    tags:
+      - v*
+  pull_request: {}
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
