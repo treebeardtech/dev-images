@@ -54,6 +54,7 @@ jobs:
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      - run: npm install -g @devcontainers/cli@v0.30.0
       - name: Build image
         run: |
           devcontainer build \
