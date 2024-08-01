@@ -1,0 +1,22 @@
+name: Pytest
+on:
+  workflow_dispatch: {}
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install -g @devcontainers/cli@v0.30.0
+      - run: |
+            set -e -x -u -o pipefail
+            repo=ghcr.io/treebeardtech/dev-images; tag=latest
+            docker pull hello-world
+            docker tag hello-world $repo:$tag
+            # devcontainer build \
+            #     --workspace-folder . \
+            #     --config .devcontainer/vm/devcontainer.json \
+            #     --image-name $repo:$tag
+            docker push $repo:$tag
